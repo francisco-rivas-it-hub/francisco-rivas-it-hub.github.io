@@ -1,49 +1,33 @@
-# Francisco Rivas – Portfolio Website
+# Francisco Rivas – IT Infrastructure & Automation Portfolio
 
-Personal IT infrastructure portfolio hosted via GitHub Pages.
+Personal IT infrastructure, scripting, and automation portfolio hosted via GitHub Pages.
 
-🌐 **Live site:** https://francisco-rivas-it-hub.github.io/
-
----
+🌐 **Live site:** [francisco-rivas-it-hub.github.io](https://francisco-rivas-it-hub.github.io/)
 
 ## About
+Infrastructure & Security Operations Specialist with hands-on enterprise experience in live production environments. I specialize in bridging the gap between global IT strategy and local execution through PowerShell automation, systems administration, and HiTrust compliance. Currently pursuing a Cybersecurity technical degree.
 
-Onsite IT Specialist with 18 months of hands-on enterprise experience
-in live production BPO environments. Currently pursuing a Cybersecurity
-technician certification.
+### Key Metrics & Impact
+* **1,000+** users supported across multi-site enterprise environments
+* **2,000+** technical incidents resolved (Hardware, Network, AD)
+* **1** Global Service Improvement Project (SIP) designed and approved by IT leadership
+* **60%** provisioning time saved via automated OS deployment (DISM/Sysprep)
+* **11** exclusive HiTrust controls managed (Onsite Technical Owner across 11 domains)
 
-- 2,033 tickets handled | 3,282 replies written
-- 100+ Windows 11 migrations executed
-- 250+ endpoints managed across 5 sites
-- 1,000+ users supported across all locations
-- HiTrust Control Owner — 11 exclusive controls, 11 security domains
+## Technical Domains (Proof of Work)
+1. **Endpoint Deployment & Architecture** (Win11, UEFI:NTFS, DISM, Sysprep)
+2. **Active Directory Governance** (GPO, Trust Remediation, DUO MFA, Entra ID)
+3. **Network Segmentation** (Cisco Catalyst, VLANs, 802.1X NAC, PDU Management)
+4. **Endpoint Security** (CrowdStrike Falcon, BitLocker, HP Sure Start)
+5. **HiTrust Control Ownership** (Physical/Logical Security, Audit Evidence gathering)
+6. **Infrastructure Automation & SIP** (PowerShell Frameworks, Session Management)
+7. **Remote Operations** (Intune, NinjaRMM, VDI Validation)
+8. **Search & Algorithm Evaluation** (EWOQ, RLHF, User Intent Analysis)
 
----
-
-## Portfolio Projects
-
-- Endpoint Engineering
-- Active Directory Governance
-- Network Segmentation
-- Endpoint Security
-- HiTrust Control Ownership
-- Infrastructure Automation
-- Remote Operations
-- Incident Response
-- Systems Architecture
-
-For detailed technical case studies, visit the
-[IT Portfolio](https://github.com/francisco-rivas-it-hub/francisco-rivas-it-hub-portfolio) repo.
-
----
+*For detailed technical case studies and automation scripts, explore the domain folders within this repository.*
 
 ## Tech Stack
-
-HTML · CSS · GitHub Pages · PowerShell · Windows Server · Active Directory ·
-CrowdStrike · BitLocker · Cisco · HiTrust CSF
-
----
-
-Maintained and updated as infrastructure experience evolves.
-Commit:
-docs: update README with real metrics and 9-domain portfolio structure
+* **Infrastructure:** Windows Server, Active Directory, Entra ID, Cisco Switching
+* **Security & Compliance:** HiTrust CSF, CrowdStrike EDR, BitLocker, TPM Governance
+* **Automation & Data:** PowerShell Scripting, .NET (C#), Unattended OS Imaging, Search Quality Analysis (RLHF)
+* **Web Build:** HTML, CSS, GitHub Pages
