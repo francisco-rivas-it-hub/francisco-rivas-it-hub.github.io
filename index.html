@@ -17,127 +17,623 @@
     --text: #e2e8f0;
     --muted: #64748b;
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.7; overflow-x: hidden; }
-  body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
-  body::after { content: ''; position: fixed; top: -200px; right: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%); pointer-events: none; z-index: 0; }
-  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
 
-  nav { position: sticky; top: 0; z-index: 100; background: rgba(10,12,16,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 1rem 0; }
-  nav .container { display: flex; align-items: center; justify-content: space-between; }
-  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
-  .nav-logo::before { content: '>'; color: var(--green); animation: blink 1.2s step-end infinite; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Glow top-right */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,12,16,0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+  }
+
+  nav .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--accent);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .nav-logo::before {
+    content: '>';
+    color: var(--green);
+    animation: blink 1.2s step-end infinite;
+    flex-shrink: 0;
+  }
+
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+    flex-shrink: 0;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+
   .nav-links a:hover { color: var(--accent); }
 
-  header { padding: 6rem 0 4rem; border-bottom: 1px solid var(--border); }
-  .status-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); color: var(--green); font-size: 0.75rem; padding: 0.3rem 0.8rem; border-radius: 2px; margin-bottom: 1.5rem; letter-spacing: 0.08em; }
-  .status-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; box-shadow: 0 0 8px var(--green); animation: pulse 2s ease-in-out infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
-  h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.02em; }
-  h1 span { display: block; background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .hero-subtitle { color: var(--muted); font-size: 0.9rem; max-width: 580px; margin-bottom: 2rem; }
-  .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem; }
-  .meta-pill { display: flex; align-items: center; gap: 0.4rem; background: var(--surface); border: 1px solid var(--border); padding: 0.4rem 0.8rem; border-radius: 2px; font-size: 0.78rem; color: var(--text); }
-  .meta-pill .icon { color: var(--accent); }
-  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.4rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 600; text-decoration: none; border-radius: 2px; letter-spacing: 0.05em; transition: all 0.2s; border: none; cursor: pointer; }
+  /* ─── HEADER ─── */
+  header {
+    padding: 6rem 0 4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0,255,136,0.08);
+    border: 1px solid rgba(0,255,136,0.2);
+    color: var(--green);
+    font-size: 0.75rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.08em;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse {
+    0%,100%{opacity:1;transform:scale(1)}
+    50%{opacity:0.5;transform:scale(0.8)}
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+
+  h1 span {
+    display: block;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    color: var(--muted);
+    font-size: 0.87rem;
+    max-width: 580px;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+  }
+
+  .hero-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .meta-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.8rem;
+    border-radius: 2px;
+    font-size: 0.78rem;
+    color: var(--text);
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 2px;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
   .btn-primary { background: var(--accent); color: #000; }
-  .btn-primary:hover { background: #fff; box-shadow: 0 0 20px rgba(0,212,255,0.4); transform: translateY(-1px); }
-  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
-  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+  .btn-primary:hover {
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,212,255,0.4);
+    transform: translateY(-1px);
+  }
 
-  section { padding: 4rem 0; border-bottom: 1px solid var(--border); }
-  .section-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
-  .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, var(--border), transparent); max-width: 200px; }
-  h2 { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; margin-bottom: 2rem; letter-spacing: -0.02em; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
 
-  .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 3rem; }
-  .stat-item { background: var(--surface); padding: 1.2rem 1.5rem; text-align: center; }
-  .stat-number { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--accent); display: block; }
-  .stat-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
 
-  .terminal { background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; margin-bottom: 2rem; }
-  .terminal-bar { background: var(--surface); padding: 0.6rem 1rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid var(--border); }
-  .dot { width: 10px; height: 10px; border-radius: 50%; }
-  .dot.red { background: #f43f5e; } .dot.yellow { background: #fbbf24; } .dot.green { background: #34d399; }
-  .terminal-body { padding: 1.2rem 1.5rem; font-size: 0.8rem; line-height: 2; }
-  .t-comment { color: #4a5568; } .t-cmd { color: var(--green); } .t-arg { color: var(--accent); } .t-str { color: #fbbf24; } .t-out { color: var(--muted); }
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 4rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+    max-width: 200px;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+  }
+
+  /* ─── STATS ─── */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+
+  .stat-item {
+    background: var(--surface);
+    padding: 1.2rem 1rem;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent);
+    display: block;
+    line-height: 1.2;
+  }
+
+  .stat-label {
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── TERMINAL ─── */
+  .terminal {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .terminal-bar {
+    background: var(--surface);
+    padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot.red    { background: #f43f5e; }
+  .dot.yellow { background: #fbbf24; }
+  .dot.green  { background: #34d399; }
+
+  .terminal-body {
+    padding: 1.2rem 1.5rem;
+    font-size: 0.8rem;
+    line-height: 2;
+    overflow-x: auto;
+  }
+
+  .t-comment { color: #4a5568; }
+  .t-cmd     { color: var(--green); }
+  .t-arg     { color: var(--accent); }
+  .t-str     { color: #fbbf24; }
+  .t-out     { color: var(--muted); }
   .t-cursor::after { content: '█'; color: var(--green); animation: blink 1s step-end infinite; }
 
-  .projects-grid { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
-  .project-card { background: var(--surface); padding: 1.8rem; display: grid; grid-template-columns: auto 1fr auto; gap: 1.5rem; align-items: start; transition: background 0.2s; text-decoration: none; color: inherit; }
+  /* ─── PROJECTS ─── */
+  .projects-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .project-card {
+    background: var(--surface);
+    padding: 1.6rem;
+    display: grid;
+    grid-template-columns: 42px 1fr 20px;
+    gap: 1.2rem;
+    align-items: start;
+    transition: background 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+
   .project-card:hover { background: var(--surface2); }
   .project-card:hover .project-arrow { opacity: 1; transform: translateX(0); }
-  .project-index { width: 42px; height: 42px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--accent); font-weight: 700; flex-shrink: 0; }
-  .project-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--text); }
-  .project-desc { color: var(--muted); font-size: 0.8rem; line-height: 1.6; margin-bottom: 0.8rem; }
-  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .tag { font-size: 0.7rem; padding: 0.15rem 0.5rem; background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.15); color: var(--accent); border-radius: 2px; }
+
+  .project-index {
+    width: 42px;
+    height: 42px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+
+  .tag {
+    font-size: 0.68rem;
+    padding: 0.15rem 0.5rem;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.15);
+    color: var(--accent);
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
   .tag.purple { background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.25); color: #a78bfa; }
-  .tag.green { background: rgba(0,255,136,0.08); border-color: rgba(0,255,136,0.2); color: var(--green); }
+  .tag.green  { background: rgba(0,255,136,0.08); border-color: rgba(0,255,136,0.2);   color: var(--green); }
   .tag.orange { background: rgba(251,146,60,0.08); border-color: rgba(251,146,60,0.25); color: #fb923c; }
-  .project-arrow { color: var(--accent); opacity: 0; transform: translateX(-6px); transition: all 0.2s; font-size: 1.1rem; }
 
-  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
-  .skill-group { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 1.4rem; }
-  .skill-group-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
-  .skill-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; font-size: 0.82rem; }
-  .skill-bar-bg { width: 80px; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
-  .skill-bar { height: 100%; background: linear-gradient(to right, var(--accent2), var(--accent)); border-radius: 2px; animation: growBar 1.2s ease forwards; transform-origin: left; }
-  @keyframes growBar { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+  .project-arrow {
+    color: var(--accent);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: all 0.2s;
+    font-size: 1rem;
+    align-self: center;
+  }
 
-  .stack-list { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-  .stack-item { background: var(--surface); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 2px; font-size: 0.8rem; color: var(--text); display: flex; align-items: center; gap: 0.4rem; transition: all 0.2s; }
-  .stack-item:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-  .stack-item span { color: var(--accent); }
+  /* ─── SKILLS ─── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+  }
 
-  footer { padding: 3rem 0; text-align: center; color: var(--muted); font-size: 0.78rem; }
+  .skill-group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.4rem;
+  }
+
+  .skill-group-title {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.65rem;
+    font-size: 0.8rem;
+    gap: 0.5rem;
+  }
+
+  .skill-name { flex: 1; min-width: 0; }
+
+  .skill-bar-bg {
+    width: 70px;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .skill-bar {
+    height: 100%;
+    background: linear-gradient(to right, var(--accent2), var(--accent));
+    border-radius: 2px;
+  }
+
+  /* ─── STACK ─── */
+  .stack-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .stack-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    border-radius: 2px;
+    font-size: 0.78rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .stack-item:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .stack-item .icon { color: var(--accent); font-size: 0.9rem; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 3rem 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
   footer a { color: var(--accent); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
-  .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; flex-wrap: wrap; }
 
-  .fade-up { opacity: 0; transform: translateY(20px); animation: fadeUp 0.6s ease forwards; }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--border);
+    margin: 1.2rem auto;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.6s ease forwards;
+  }
+
   @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-  .fade-up:nth-child(1){animation-delay:0.1s} .fade-up:nth-child(2){animation-delay:0.2s} .fade-up:nth-child(3){animation-delay:0.3s} .fade-up:nth-child(4){animation-delay:0.4s} .fade-up:nth-child(5){animation-delay:0.5s}
+
+  .fade-up:nth-child(1) { animation-delay: 0.1s; }
+  .fade-up:nth-child(2) { animation-delay: 0.2s; }
+  .fade-up:nth-child(3) { animation-delay: 0.3s; }
+  .fade-up:nth-child(4) { animation-delay: 0.4s; }
+  .fade-up:nth-child(5) { animation-delay: 0.5s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 640px) {
+    .container { padding: 0 1.2rem; }
+
+    .nav-logo { font-size: 0.82rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.7rem; }
+
+    header { padding: 3.5rem 0 2.5rem; }
+
+    .project-card {
+      grid-template-columns: 36px 1fr;
+      gap: 0.9rem;
+    }
+
+    .project-arrow { display: none; }
+
+    .stats-bar {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-number { font-size: 1.4rem; }
+
+    h2 { font-size: 1.4rem; }
+
+    .terminal-body { font-size: 0.72rem; }
+
+    .hero-cta { flex-direction: column; }
+    .btn { justify-content: center; }
+  }
+
+  @media (max-width: 400px) {
+    .nav-links .hide-xs { display: none; }
+  }
 </style>
 </head>
 <body>
 
+<!-- ═══ NAV ═══ -->
 <nav>
   <div class="container">
-    <a href="#" class="nav-logo">francisco-rivas-it-hub</a>
+    <a href="#" class="nav-logo">francisco-rivas</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#skills">Skills</a></li>
-      <li><a href="https://github.com/francisco-rivas-it-hub/francisco-rivas-it-hub-portfolio" target="_blank">GitHub</a></li>
+      <li class="hide-xs"><a href="https://github.com/francisco-rivas-it-hub/francisco-rivas-it-hub-portfolio" target="_blank">GitHub</a></li>
     </ul>
   </div>
 </nav>
 
+<!-- ═══ HERO ═══ -->
 <header>
   <div class="container">
     <div class="status-badge fade-up">
       <span class="status-dot"></span>
       Available for opportunities
     </div>
+
     <h1 class="fade-up">
       Francisco Rivas
       <span>Infrastructure & Automation Specialist</span>
     </h1>
+
     <p class="hero-subtitle fade-up">
-      Infrastructure & Security Operations Specialist with experience managing enterprise IT environments supporting 1,000+ users. Bridging the gap between global IT strategy and local execution through PowerShell automation, systems administration, and HiTrust compliance in live production environments.
+      Infrastructure & Security Operations Specialist with experience managing enterprise IT environments
+      supporting 1,000+ users. Bridging the gap between global IT strategy and local execution through
+      PowerShell automation, systems administration, and HiTrust compliance in live production environments.
     </p>
+
     <div class="hero-meta fade-up">
-      <div class="meta-pill"><span class="icon">⚙</span> IT Infrastructure Specialist</div>
-      <div class="meta-pill"><span class="icon">🏢</span> BPO Enterprise — 7+ Campaigns</div>
-      <div class="meta-pill"><span class="icon">🔒</span> HiTrust Control Owner (Onsite)</div>
-      <div class="meta-pill"><span class="icon">📊</span> Search & Data Quality Analyst</div>
+      <div class="meta-pill">⚙ IT Infrastructure Specialist</div>
+      <div class="meta-pill">🏢 BPO Enterprise — 20+ Campaigns</div>
+      <div class="meta-pill">🔒 HiTrust Control Owner (Onsite)</div>
+      <div class="meta-pill">📊 Search & Data Quality Analyst</div>
     </div>
+
     <div class="hero-cta fade-up">
       <a href="https://github.com/francisco-rivas-it-hub/francisco-rivas-it-hub-portfolio" target="_blank" class="btn btn-primary">
         → View Full Portfolio
@@ -149,49 +645,70 @@
   </div>
 </header>
 
+<!-- ═══ ABOUT ═══ -->
 <section id="about">
   <div class="container">
     <div class="section-label">// about</div>
     <h2>What I Do</h2>
+
     <div class="terminal">
       <div class="terminal-bar">
-        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot green"></div>
       </div>
       <div class="terminal-body">
-        <div><span class="t-comment"># francisco-rivas-it-hub — Operations & Automation</span></div>
+        <div><span class="t-comment"># francisco-rivas — Operations & Automation</span></div>
         <div><span class="t-cmd">$ whoami</span></div>
         <div><span class="t-out">→ Infrastructure & Automation Specialist | HiTrust Control Owner</span></div>
         <div><span class="t-cmd">$ cat scope.txt</span></div>
-        <div><span class="t-arg">Endpoint Deployment</span> <span class="t-str">"Win11, DISM, Sysprep, WinPE, UEFI:NTFS, pnputil"</span></div>
-        <div><span class="t-arg">AD Governance</span>       <span class="t-str">"Trust Relationship repair, GPO, DUO MFA, Entra ID"</span></div>
-        <div><span class="t-arg">Network Operations</span>  <span class="t-str">"Cisco Catalyst, VLANs, 802.1X NAC, PDU Rack"</span></div>
-        <div><span class="t-arg">Endpoint Security</span>   <span class="t-str">"CrowdStrike, BitLocker, HP Sure Start, PKI/TLS"</span></div>
-        <div><span class="t-arg">HiTrust Compliance</span>  <span class="t-str">"11 exclusive controls + 22 shared — 11 domains"</span></div>
-        <div><span class="t-arg">Automation</span>          <span class="t-str">"Session mitigation framework (SIP), PowerShell scripting"</span></div>
-        <div><span class="t-arg">Data & Algorithms</span>   <span class="t-str">"Search Quality Eval, User Intent Analysis, RLHF Feedback"</span></div>
+        <div><span class="t-arg">Endpoint Deployment  </span> <span class="t-str">"Win11, DISM, Sysprep, WinPE, UEFI:NTFS, pnputil"</span></div>
+        <div><span class="t-arg">AD Governance        </span> <span class="t-str">"Trust Relationship repair, GPO, DUO MFA, Entra ID"</span></div>
+        <div><span class="t-arg">Network Operations   </span> <span class="t-str">"Cisco Catalyst, VLANs, 802.1X NAC, PDU Rack"</span></div>
+        <div><span class="t-arg">Endpoint Security    </span> <span class="t-str">"CrowdStrike, BitLocker, HP Sure Start, PKI/TLS"</span></div>
+        <div><span class="t-arg">HiTrust Compliance   </span> <span class="t-str">"33 exclusive controls + 22 shared — 11 domains"</span></div>
+        <div><span class="t-arg">Automation           </span> <span class="t-str">"Session mitigation framework (SIP), PowerShell"</span></div>
+        <div><span class="t-arg">Data & Algorithms    </span> <span class="t-str">"Search Quality Eval, User Intent Analysis, RLHF"</span></div>
         <div class="t-cursor"><span class="t-cmd">$ </span></div>
       </div>
     </div>
 
     <div class="stats-bar">
-      <div class="stat-item"><span class="stat-number">1,000+</span><span class="stat-label">Users Supported</span></div>
-      <div class="stat-item"><span class="stat-number">60%</span><span class="stat-label">Deploy Time Saved</span></div>
-      <div class="stat-item"><span class="stat-number">2,000+</span><span class="stat-label">Incidents Resolved</span></div>
-      <div class="stat-item"><span class="stat-number">11</span><span class="stat-label">HiTrust Controls</span></div>
-      <div class="stat-item"><span class="stat-number">1</span><span class="stat-label">Global SIP Approved</span></div>
+      <div class="stat-item">
+        <span class="stat-number">1,000+</span>
+        <span class="stat-label">Users Supported</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">60%</span>
+        <span class="stat-label">Deploy Time Saved</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">2,000+</span>
+        <span class="stat-label">Incidents Resolved</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">11</span>
+        <span class="stat-label">HiTrust Controls</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">1</span>
+        <span class="stat-label">Global SIP Approved</span>
+      </div>
     </div>
 
-    <p style="color:var(--muted); font-size:0.85rem; line-height:1.8;">
+    <p style="color:var(--muted); font-size:0.83rem; line-height:1.8;">
       All case studies reflect hands-on execution in live production environments — not lab simulations.
       Sensitive identifiers have been anonymized to protect organizational confidentiality.
     </p>
   </div>
 </section>
 
+<!-- ═══ PROJECTS ═══ -->
 <section id="projects">
   <div class="container">
     <div class="section-label">// projects</div>
     <h2>Technical Domains</h2>
+
     <div class="projects-grid">
 
       <a href="https://github.com/francisco-rivas-it-hub/francisco-rivas-it-hub-portfolio/tree/main/01%20%E2%80%94%20Endpoint%20Engineering" target="_blank" class="project-card">
@@ -199,7 +716,12 @@
         <div>
           <div class="project-name">Endpoint Deployment & Architecture</div>
           <div class="project-desc">100+ Windows 11 migrations including legacy hardware via UEFI:NTFS v2.6. Full imaging lifecycle: DISM, Sysprep, Macrium Reflect, WinPE, pnputil bulk driver injection.</div>
-          <div class="project-tags"><span class="tag">Windows 11</span><span class="tag">UEFI:NTFS</span><span class="tag">DISM / Sysprep</span><span class="tag green">100+ Endpoints</span></div>
+          <div class="project-tags">
+            <span class="tag">Windows 11</span>
+            <span class="tag">UEFI:NTFS</span>
+            <span class="tag">DISM / Sysprep</span>
+            <span class="tag green">100+ Endpoints</span>
+          </div>
         </div>
         <div class="project-arrow">→</div>
       </a>
@@ -209,7 +731,12 @@
         <div>
           <div class="project-name">Active Directory Governance</div>
           <div class="project-desc">Identity-layer stabilization in a single-domain, multi-VLAN enterprise. 6+ Trust Relationship remediations, 25+ stale objects removed, GPO/RSOP validation, DUO MFA provisioning.</div>
-          <div class="project-tags"><span class="tag">Active Directory</span><span class="tag purple">GPO / RSOP</span><span class="tag">DUO MFA</span><span class="tag">PowerShell</span></div>
+          <div class="project-tags">
+            <span class="tag">Active Directory</span>
+            <span class="tag purple">GPO / RSOP</span>
+            <span class="tag">DUO MFA</span>
+            <span class="tag">PowerShell</span>
+          </div>
         </div>
         <div class="project-arrow">→</div>
       </a>
@@ -218,8 +745,13 @@
         <div class="project-index">03</div>
         <div>
           <div class="project-name">Network Segmentation</div>
-          <div class="project-desc">Layer 1-3 operational remediation in production. 4+ VLAN incidents resolved. Cisco Catalyst 3750, 802.1X NAC troubleshooting, CyberPower PDU rack management, Grandstream VoIP deployment.</div>
-          <div class="project-tags"><span class="tag">Cisco Catalyst</span><span class="tag">VLAN 17/18/72</span><span class="tag">802.1X NAC</span><span class="tag green">PDU Rack</span></div>
+          <div class="project-desc">Layer 1–3 operational remediation in production. 4+ VLAN incidents resolved. Cisco Catalyst 3750, 802.1X NAC troubleshooting, CyberPower PDU rack management, Grandstream VoIP deployment.</div>
+          <div class="project-tags">
+            <span class="tag">Cisco Catalyst</span>
+            <span class="tag">VLAN 17/18/72</span>
+            <span class="tag">802.1X NAC</span>
+            <span class="tag green">PDU Rack</span>
+          </div>
         </div>
         <div class="project-arrow">→</div>
       </a>
@@ -229,7 +761,12 @@
         <div>
           <div class="project-name">Endpoint Security</div>
           <div class="project-desc">CrowdStrike Falcon deployment (PSSecurityException resolved), BitLocker on 13+ endpoints, HP Sure Start firmware hardening, TPM remediation, PKI/TLS audit, AppLocker validation.</div>
-          <div class="project-tags"><span class="tag">CrowdStrike</span><span class="tag purple">BitLocker</span><span class="tag">HP Sure Start</span><span class="tag">PKI / TLS</span></div>
+          <div class="project-tags">
+            <span class="tag">CrowdStrike</span>
+            <span class="tag purple">BitLocker</span>
+            <span class="tag">HP Sure Start</span>
+            <span class="tag">PKI / TLS</span>
+          </div>
         </div>
         <div class="project-arrow">→</div>
       </a>
@@ -239,7 +776,12 @@
         <div>
           <div class="project-name">HiTrust Control Ownership</div>
           <div class="project-desc">Sole SPOC for 11 exclusive HiTrust controls + co-responsible for 22 more across 11 security domains. Evidence: BitLocker 13 endpoints, CCTV dual system, CO2 extinguisher, physical walkthroughs.</div>
-          <div class="project-tags"><span class="tag">HiTrust CSF</span><span class="tag purple">11 Exclusive Controls</span><span class="tag">Physical Security</span><span class="tag green">Sole SPOC</span></div>
+          <div class="project-tags">
+            <span class="tag">HiTrust CSF</span>
+            <span class="tag purple">11 Exclusive Controls</span>
+            <span class="tag">Physical Security</span>
+            <span class="tag green">Sole SPOC</span>
+          </div>
         </div>
         <div class="project-arrow">→</div>
       </a>
@@ -249,7 +791,12 @@
         <div>
           <div class="project-name">Infrastructure Automation & SIP</div>
           <div class="project-desc">Designed an automation framework for session management approved as a global Service Improvement Project (SIP). Multi-method campaign transition engine (winget → MSI → EXE) reducing deployment conflicts.</div>
-          <div class="project-tags"><span class="tag">PowerShell</span><span class="tag purple">Global SIP</span><span class="tag">Automation</span><span class="tag green">Optimization</span></div>
+          <div class="project-tags">
+            <span class="tag">PowerShell</span>
+            <span class="tag purple">Global SIP</span>
+            <span class="tag">Automation</span>
+            <span class="tag green">Optimization</span>
+          </div>
         </div>
         <div class="project-arrow">→</div>
       </a>
@@ -258,4 +805,117 @@
         <div class="project-index">07</div>
         <div>
           <div class="project-name">Remote Operations</div>
-          <div class="project-desc">250+ endpoints managed across 5 sites using AnyDesk, TeamViewer, UltraVNC (service mode), NinjaR
+          <div class="project-desc">250+ endpoints managed across 5 sites using AnyDesk, TeamViewer, UltraVNC (service mode), NinjaRMM. Zero-touch deployment pipelines, remote GPO enforcement, and cross-timezone escalation coordination.</div>
+          <div class="project-tags">
+            <span class="tag">AnyDesk</span>
+            <span class="tag">NinjaRMM</span>
+            <span class="tag purple">UltraVNC</span>
+            <span class="tag green">250+ Endpoints</span>
+          </div>
+        </div>
+        <div class="project-arrow">→</div>
+      </a>
+
+      <a href="https://github.com/francisco-rivas-it-hub/francisco-rivas-it-hub-portfolio/tree/main/08%20%E2%80%94%20Data%20Quality" target="_blank" class="project-card">
+        <div class="project-index">08</div>
+        <div>
+          <div class="project-name">Search & Data Quality Analysis</div>
+          <div class="project-desc">Search Quality Evaluation with user intent classification, RLHF feedback loops, and relevance scoring. Structured analytical approach applied to ambiguous real-world queries across multiple verticals.</div>
+          <div class="project-tags">
+            <span class="tag">Search Quality</span>
+            <span class="tag purple">RLHF Feedback</span>
+            <span class="tag">User Intent</span>
+            <span class="tag orange">Data Analysis</span>
+          </div>
+        </div>
+        <div class="project-arrow">→</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SKILLS ═══ -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label">// skills</div>
+    <h2>Technical Proficiency</h2>
+
+    <div class="skills-grid" style="margin-bottom: 2.5rem;">
+
+      <div class="skill-group">
+        <div class="skill-group-title">Endpoint & Deployment</div>
+        <div class="skill-item"><span class="skill-name">Windows 11 / DISM / Sysprep</span><div class="skill-bar-bg"><div class="skill-bar" style="width:95%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">WinPE / UEFI:NTFS</span><div class="skill-bar-bg"><div class="skill-bar" style="width:90%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Driver Injection (pnputil)</span><div class="skill-bar-bg"><div class="skill-bar" style="width:88%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Macrium Reflect / ADK</span><div class="skill-bar-bg"><div class="skill-bar" style="width:85%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">NTLite / ISO Customization</span><div class="skill-bar-bg"><div class="skill-bar" style="width:80%"></div></div></div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Identity & Directories</div>
+        <div class="skill-item"><span class="skill-name">Active Directory / GPO</span><div class="skill-bar-bg"><div class="skill-bar" style="width:92%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">PowerShell Automation</span><div class="skill-bar-bg"><div class="skill-bar" style="width:90%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">DUO MFA / Entra ID</span><div class="skill-bar-bg"><div class="skill-bar" style="width:82%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">WSUS / Windows Update</span><div class="skill-bar-bg"><div class="skill-bar" style="width:80%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Trust Relationship Repair</span><div class="skill-bar-bg"><div class="skill-bar" style="width:88%"></div></div></div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Network & Security</div>
+        <div class="skill-item"><span class="skill-name">Cisco Catalyst / VLANs</span><div class="skill-bar-bg"><div class="skill-bar" style="width:85%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">802.1X NAC</span><div class="skill-bar-bg"><div class="skill-bar" style="width:78%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">CrowdStrike Falcon</span><div class="skill-bar-bg"><div class="skill-bar" style="width:84%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">BitLocker / PKI / TLS</span><div class="skill-bar-bg"><div class="skill-bar" style="width:82%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">HiTrust CSF</span><div class="skill-bar-bg"><div class="skill-bar" style="width:88%"></div></div></div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Dev & Tooling</div>
+        <div class="skill-item"><span class="skill-name">PowerShell / ps2exe</span><div class="skill-bar-bg"><div class="skill-bar" style="width:90%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">C# / Windows Forms</span><div class="skill-bar-bg"><div class="skill-bar" style="width:70%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Git / GitHub</span><div class="skill-bar-bg"><div class="skill-bar" style="width:75%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Omnissa Horizon (VDI)</span><div class="skill-bar-bg"><div class="skill-bar" style="width:78%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">NinjaRMM / AnyDesk</span><div class="skill-bar-bg"><div class="skill-bar" style="width:86%"></div></div></div>
+      </div>
+
+    </div>
+
+    <div class="section-label" style="margin-bottom:1rem;">// stack</div>
+    <div class="stack-list">
+      <div class="stack-item"><span class="icon">⚡</span> PowerShell</div>
+      <div class="stack-item"><span class="icon">🪟</span> Windows 11</div>
+      <div class="stack-item"><span class="icon">🏗</span> DISM / WinPE</div>
+      <div class="stack-item"><span class="icon">🔐</span> CrowdStrike</div>
+      <div class="stack-item"><span class="icon">🏛</span> Active Directory</div>
+      <div class="stack-item"><span class="icon">🔑</span> BitLocker</div>
+      <div class="stack-item"><span class="icon">🌐</span> Cisco Catalyst</div>
+      <div class="stack-item"><span class="icon">📡</span> VLAN / 802.1X</div>
+      <div class="stack-item"><span class="icon">☁</span> Entra ID</div>
+      <div class="stack-item"><span class="icon">🛡</span> HiTrust CSF</div>
+      <div class="stack-item"><span class="icon">💻</span> C# / WinForms</div>
+      <div class="stack-item"><span class="icon">🔧</span> NinjaRMM</div>
+      <div class="stack-item"><span class="icon">🖥</span> Omnissa Horizon</div>
+      <div class="stack-item"><span class="icon">📦</span> winget / MSI</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="https://github.com/francisco-rivas-it-hub/francisco-rivas-it-hub-portfolio" target="_blank">GitHub Portfolio</a>
+      <a href="https://www.linkedin.com/in/francisco-javier-rivas-alfaro/" target="_blank">LinkedIn</a>
+      <a href="mailto:francisco.rivas@example.com">Contact</a>
+    </div>
+    <div class="footer-divider"></div>
+    <p>© 2025 Francisco Javier Rivas Alfaro · Infrastructure & Automation Specialist · El Salvador</p>
+    <p style="margin-top:0.4rem; font-size:0.72rem;">
+      All case studies reflect live production work. Sensitive data anonymized.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
