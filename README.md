@@ -12,7 +12,7 @@ Infrastructure & Security Operations Specialist with hands-on enterprise experie
 * **2,000+** technical incidents resolved (Hardware, Network, AD)
 * **1** Global Service Improvement Project (SIP) designed and approved by IT leadership
 * **60%** provisioning time saved via automated OS deployment (DISM/Sysprep)
-* **33** exclusive HiTrust controls managed (Onsite Technical Owner across 11 domains)
+* **33** exclusive HiTrust controls managed
 
 ## Technical Domains (Proof of Work)
 1. **Endpoint Deployment & Architecture** (Win11, UEFI:NTFS, DISM, Sysprep)
